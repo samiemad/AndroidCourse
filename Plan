@@ -1,0 +1,42 @@
+Android Programming Course Plan:
+Android #1: Application Basics
+    1	intro to android + installing the ADT
+	2	xml layouts, onclick
+	3	listening to other events, longclick, touch, textchanged … etc
+	4	ListView
+	5	dialogs
+	6	actionbar + menus
+	7	intents + activity life cycle, restore state
+	8	Settings Activity
+	9	shared preferences
+	10	animations & transitions
+	11	notifications
+	12	Publishing your app to the market
+
+Android #2: advanced concepts
+    1	Media Player, Video player
+	2	start activity for result, radio check buttons, lists
+	3	using the camera
+	4	saving data to files
+	5	async tasks
+	6	fragments
+	7	navigation drawer
+	8	custom listView
+	9	context menus
+	10	send broadcast intents
+	11	receive broadcast intents
+	12	creating widgets
+
+Android #3: surfing the internet
+    1	sql databases
+	2	sql databases
+	3	sql databases
+	4	using sensors
+	5	web browser
+	6	adding tabs
+	7	improvements
+	8	HTTP connection
+	9	HTTP connection
+	10	JSON parsing
+	11	JSON parsing
+	12	advanced ListViews adapters spinners, select to delete or copy
