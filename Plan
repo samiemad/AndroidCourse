@@ -1,6 +1,6 @@
 Android Programming Course Plan:
 Android #1: Application Basics
-    1	intro to android + installing the ADT
+	1	intro to android + installing the ADT
 	2	xml layouts, onclick
 	3	listening to other events, longclick, touch, textchanged … etc
 	4	ListView
@@ -14,7 +14,7 @@ Android #1: Application Basics
 	12	Publishing your app to the market
 
 Android #2: advanced concepts
-    1	Media Player, Video player
+	1	Media Player, Video player
 	2	start activity for result, radio check buttons, lists
 	3	using the camera
 	4	saving data to files
@@ -28,9 +28,9 @@ Android #2: advanced concepts
 	12	creating widgets
 
 Android #3: surfing the internet
-    1	sql databases
-	2	sql databases
-	3	sql databases
+	1	sql databases 1
+	2	sql databases 2
+	3	sql databases 3
 	4	using sensors
 	5	web browser
 	6	adding tabs
