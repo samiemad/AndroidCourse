@@ -4,8 +4,48 @@
 
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:showAsAction="ifRoom"
+        android:title="Settings"/>
+    <item
+        android:id="@+id/action_showExit"
+        android:checkable="true"
         android:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:title="hide exit"/>
+    <item
+        android:id="@+id/action_custonBG"
+        android:checkable="true"
+        android:checked="true"
+        android:showAsAction="never"
+        android:title="Custom Background"/>
+    <item
+        android:id="@+id/action_close"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:showAsAction="always"
+        android:title="Exit App">
+    </item>
+    <item
+        android:id="@+id/action_colorSubMenu"
+        android:showAsAction="never"
+        android:title="Color">
+        <menu>
+            <group
+                android:id="@+id/action_colorGroup"
+                android:checkableBehavior="single" >
+                <item
+                    android:id="@+id/action_red"
+                    android:showAsAction="never"
+                    android:title="RED"/>
+                <item
+                    android:id="@+id/action_green"
+                    android:showAsAction="never"
+                    android:title="GREEN"/>
+                <item
+                    android:id="@+id/action_blue"
+                    android:showAsAction="never"
+                    android:title="BLUE"/>
+            </group>
+        </menu>
+    </item>
 
 </menu>

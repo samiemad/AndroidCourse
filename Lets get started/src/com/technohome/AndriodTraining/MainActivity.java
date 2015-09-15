@@ -5,16 +5,16 @@ import java.util.Random;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.NumberPicker.OnValueChangeListener;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -109,4 +109,44 @@ public class MainActivity extends Activity {
 
 	}
 
+	private MenuItem menuClose;
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.main, menu);
+		menuClose = menu.findItem(R.id.action_close);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		if (id == R.id.action_close) {
+			finish();
+		} else if (id == R.id.action_settings) {
+			Toast.makeText(this, "Settings action butoon is pressed",
+					Toast.LENGTH_SHORT).show();
+		} else if (id == R.id.action_red) {
+			tv.setBackgroundColor(Color.RED);
+			item.setChecked(true);
+		} else if (id == R.id.action_green) {
+			tv.setBackgroundColor(Color.GREEN);
+			item.setChecked(true);
+		} else if (id == R.id.action_blue) {
+			tv.setBackgroundColor(Color.BLUE);
+			item.setChecked(true);
+		} else if (id == R.id.action_showExit) {
+			if ( item.isChecked()) {
+				menuClose.setVisible(true);
+				item.setChecked(false);
+				item.setTitle("hide exit");
+			} else {
+				menuClose.setVisible(false);
+				item.setChecked(true);
+				item.setTitle("show exit");
+			}
+		}
+
+		return true;
+	}
 }
