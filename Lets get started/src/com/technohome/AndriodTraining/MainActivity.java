@@ -10,6 +10,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.NumberPicker;
+import android.widget.NumberPicker.OnValueChangeListener;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.CompoundButton;
@@ -17,45 +19,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-// this is the Main Screen class, we inherited from class Activity
 public class MainActivity extends Activity {
+	Random rnd = new Random();
+
+	TextView tv;
+	EditText et;
+	SeekBar seekBar1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// display the XML layout we created in activity_main.xml on the screen
 		setContentView(R.layout.activity_main);
 
-		// declare the toggle button and link it with the onCheckedChanged
-		// listener;
-		ToggleButton tb = (ToggleButton) findViewById(R.id.toggleButton1);
-		OnCheckedChangeListener ll = new OnCheckedChangeListener() {
+		tv = (TextView) findViewById(R.id.textView1);
+		et = (EditText) findViewById(R.id.editText1);
 
-			// this method will be called every time the toggle button changes
-			// state from on->off or off->on the method will be called.
-			@Override
-			public void onCheckedChanged(CompoundButton arg0, boolean pressed) {
-				EditText et = (EditText) findViewById(R.id.editText1);
-				// Show or hide the input text view as an example of doing
-				// something.
-				if (pressed) {
-					et.setVisibility(View.GONE);
-				} else
-					et.setVisibility(View.VISIBLE);
-			}
-		};
-		// don't forget to set the listener to link it with the ToggleButton
-		tb.setOnCheckedChangeListener(ll);
-
-		// an Example of using SeekBar and changing the textSize when the user
-		// slides the slider
-		SeekBar seek = (SeekBar) findViewById(R.id.seekBar1);
-
-		// Create a listener and implement the work that should be dont when the
-		// slider value changes.
+		// link the seekbar1 with the XMLobject
+		seekBar1 = (SeekBar) findViewById(R.id.seekBar1);
 		OnSeekBarChangeListener l = new OnSeekBarChangeListener() {
-
-			// we don't need to add anything here.
 			@Override
 			public void onStopTrackingTouch(SeekBar arg0) {
 			}
@@ -65,44 +46,65 @@ public class MainActivity extends Activity {
 			}
 
 			@Override
-			public void onProgressChanged(SeekBar arg0, int val, boolean b) {
-				// this will change the TextSize on the screen.
-				TextView tv = (TextView) findViewById(R.id.textView1);
-				tv.setTextSize(val);
+			public void onProgressChanged(SeekBar arg0, int progress, boolean arg2) {
+				//
+				tv.setTextSize((progress + 1) * 10);
 			}
 		};
+		// attach the listener with seekbar1
+		seekBar1.setOnSeekBarChangeListener(l);
 
-		// don't forget to actually set the listener to link it with the SeekBar
-		seek.setOnSeekBarChangeListener(l);
+		// find the Toggle Button View from the XML layout file:
+		ToggleButton tg = (ToggleButton) findViewById(R.id.toggleButton1);
+
+		// Create the listener that will handle the toggleButton clicks:
+		OnCheckedChangeListener listener = new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton arg0, boolean pressed) {
+				// Show/Hide the EditText when the toggle Button is pressed:
+				if (pressed) {
+					et.setVisibility(View.INVISIBLE);
+				} else {
+					et.setVisibility(View.VISIBLE);
+				}
+			}
+		};
+		// attach the listener to the Toggle Button:
+		tg.setOnCheckedChangeListener(listener);
+
+		// Find the Number Picker view from the XML layout file:
+		NumberPicker np = (NumberPicker) findViewById(R.id.numberPicker1);
+
+		// Create a listener to hanlde the number picker change events:
+		OnValueChangeListener numchanged = new OnValueChangeListener() {
+
+			@Override
+			public void onValueChange(NumberPicker arg0, int arg1, int arg2) {
+				// change the textView background color as an example.
+				int c = Color.rgb(arg1, arg2, 100);
+				tv.setBackgroundColor(c);
+			}
+		};
+		// attach the listener to the Number Picker:
+		np.setOnValueChangedListener(numchanged);
+
+		// Don't forget to set the min/max/current Values for the Number Picker:
+		np.setMaxValue(255);
+		np.setMinValue(0);
+		np.setValue(200);
+
 	}
 
-	// this is the method that will be called when the user presses the "Boom"
-	// button.
-	// note: that the method must be public, void, and must take one param that
-	// is a View.
 	public void clickBoom(View v) {
-		// this displays a little message on the screen.
 		Toast.makeText(this, "Hello World!", Toast.LENGTH_LONG).show();
 
-		// create a random generator to use later:
-		Random rnd = new Random();
-		TextView tv = (TextView) findViewById(R.id.textView1);
-		EditText et = (EditText) findViewById(R.id.editText1);
-
-		// set a random text color... using RGB scale
 		tv.setTextColor(Color.rgb(rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)));
-
-		// set a random text size
-		// rnd.nextFloat() generates a random real number between 0 and 1
 		tv.setTextSize(rnd.nextFloat() * 100);
-
-		// change the text alignment on the screen:
-		// (top, bottom, left, right, center etc... )
+		seekBar1.setProgress((int) (tv.getTextSize() / 10));
 		tv.setGravity(rnd.nextInt());
 
-		// get the text from the input EditText
 		String txt = et.getText().toString();
-		// set it to the displayed text
 		tv.setText(txt);
 
 	}
