@@ -1,5 +1,6 @@
 package com.technohome.AndriodTraining;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import android.app.Activity;
@@ -8,9 +9,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnLongClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.NumberPicker.OnValueChangeListener;
 import android.widget.SeekBar;
@@ -22,9 +29,11 @@ import android.widget.ToggleButton;
 public class MainActivity extends Activity {
 	Random rnd = new Random();
 
-	TextView tv;
-	EditText et;
-	SeekBar seekBar1;
+	private TextView tv;
+	private EditText et;
+	private SeekBar seekBar1;
+	private ArrayAdapter<MyText> adapter;
+	private ArrayList<MyText> arrayOfHistory = new ArrayList<MyText>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +59,7 @@ public class MainActivity extends Activity {
 				//
 				tv.setTextSize((progress + 1) * 10);
 			}
+
 		};
 		// attach the listener with seekbar1
 		seekBar1.setOnSeekBarChangeListener(l);
@@ -94,18 +104,55 @@ public class MainActivity extends Activity {
 		np.setMinValue(0);
 		np.setValue(200);
 
+		adapter = new ArrayAdapter<MyText>(this, android.R.layout.simple_list_item_1, arrayOfHistory);
+		final ListView myListView = (ListView) findViewById(R.id.listViewHistory);
+		myListView.setAdapter(adapter);
+		myListView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				tv.setText(arrayOfHistory.get(position).text);
+				tv.setTextSize(arrayOfHistory.get(position).size);
+				tv.setTextColor(arrayOfHistory.get(position).color);
+				tv.setGravity(arrayOfHistory.get(position).gravity);
+				tv.setVisibility(View.VISIBLE);
+				myListView.setVisibility(View.INVISIBLE);
+			}
+		});
+		myListView.setOnItemLongClickListener(new OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+				adapter.remove(arrayOfHistory.get(position));
+				return true;
+			}
+		});
+
+		tv.setOnLongClickListener(new OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				tv.setVisibility(View.INVISIBLE);
+				myListView.setVisibility(View.VISIBLE);
+				return true;
+			}
+		});
 	}
 
 	public void clickBoom(View v) {
 		Toast.makeText(this, "Hello World!", Toast.LENGTH_LONG).show();
 
-		tv.setTextColor(Color.rgb(rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)));
-		tv.setTextSize(rnd.nextFloat() * 100);
+		int color = Color.rgb(rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+		tv.setTextColor(color);
+
+		float size = rnd.nextFloat() * 100;
+		tv.setTextSize(size);
+
 		seekBar1.setProgress((int) (tv.getTextSize() / 10));
-		tv.setGravity(rnd.nextInt());
+		int gravity = rnd.nextInt();
+		tv.setGravity(gravity);
 
 		String txt = et.getText().toString();
 		tv.setText(txt);
+
+		adapter.add(new MyText(txt, color, size, gravity));
 
 	}
 
@@ -124,8 +171,7 @@ public class MainActivity extends Activity {
 		if (id == R.id.action_close) {
 			finish();
 		} else if (id == R.id.action_settings) {
-			Toast.makeText(this, "Settings action butoon is pressed",
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Settings action butoon is pressed", Toast.LENGTH_SHORT).show();
 		} else if (id == R.id.action_red) {
 			tv.setBackgroundColor(Color.RED);
 			item.setChecked(true);
@@ -136,7 +182,7 @@ public class MainActivity extends Activity {
 			tv.setBackgroundColor(Color.BLUE);
 			item.setChecked(true);
 		} else if (id == R.id.action_showExit) {
-			if ( item.isChecked()) {
+			if (item.isChecked()) {
 				menuClose.setVisible(true);
 				item.setChecked(false);
 				item.setTitle("hide exit");

@@ -40,7 +40,7 @@
         <NumberPicker
             android:id="@+id/numberPicker1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="76dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -69,11 +69,24 @@
         </LinearLayout>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center"
-        android:text="1\n2\n3\n" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:text="Hello" />
+
+        <ListView
+            android:id="@+id/listViewHistory"
+            android:layout_width="match_parent"
+            android:visibility="invisible"
+            android:layout_height="wrap_content" >
+        </ListView>
+
+    </FrameLayout>
 
 </LinearLayout>
