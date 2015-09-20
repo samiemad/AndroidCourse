@@ -4,16 +4,22 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
@@ -29,7 +35,7 @@ import android.widget.ToggleButton;
 public class MainActivity extends Activity {
 	Random rnd = new Random();
 
-	private TextView tv;
+	TextView tv;
 	private EditText et;
 	private SeekBar seekBar1;
 	private ArrayAdapter<MyText> adapter;
@@ -121,7 +127,8 @@ public class MainActivity extends Activity {
 		myListView.setOnItemLongClickListener(new OnItemLongClickListener() {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-				adapter.remove(arrayOfHistory.get(position));
+				// adapter.remove(arrayOfHistory.get(position));
+				showDeleteDialog(position);
 				return true;
 			}
 		});
@@ -134,6 +141,28 @@ public class MainActivity extends Activity {
 				return true;
 			}
 		});
+	}
+
+	private void showDeleteDialog(final int position) {
+		AlertDialog dlg = new AlertDialog.Builder(this).create();
+		dlg.setTitle("Confirm");
+		dlg.setMessage("are you sure you want to delete " + arrayOfHistory.get(position) + "?");
+		dlg.setIcon(android.R.drawable.ic_dialog_alert);
+		dlg.setCancelable(true);
+		dlg.setCanceledOnTouchOutside(true);
+		DialogInterface.OnClickListener lstnr = new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				if (which == AlertDialog.BUTTON_POSITIVE) {
+					adapter.remove(arrayOfHistory.get(position));
+				}
+				dialog.dismiss();
+			}
+		};
+		dlg.setButton(AlertDialog.BUTTON_NEGATIVE, "No", lstnr);
+		dlg.setButton(AlertDialog.BUTTON_POSITIVE, "Yes", lstnr);
+		dlg.show();
 	}
 
 	public void clickBoom(View v) {
@@ -191,8 +220,63 @@ public class MainActivity extends Activity {
 				item.setChecked(true);
 				item.setTitle("show exit");
 			}
+		} else if (id == R.id.action_chooseBG) {
+			showBGChooseDialog();
 		}
 
 		return true;
+	}
+
+	int r, g, b;
+
+	private void showBGChooseDialog() {
+		final Dialog dlg = new ColorChooserDialog(this);
+		dlg.show();
+	}
+
+	boolean exit = false;
+
+	@Override
+	public void onBackPressed() {
+		if (exit == false) {
+			exit = true;
+			Toast.makeText(this, "Press back again to exit", Toast.LENGTH_LONG).show();
+			Thread th = new Thread() {
+				@Override
+				public void run() {
+					try {
+						sleep(3000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					} finally {
+						exit = false;
+					}
+				}
+			};
+			th.start();
+		} else {
+			super.onBackPressed();
+		}
+		// AlertDialog dlg = new AlertDialog.Builder(this).create();
+		// dlg.setTitle("Exit");
+		// dlg.setMessage("Are you sure you want to exit?");
+		// dlg.setIcon(android.R.drawable.ic_dialog_info);
+		// dlg.setCancelable(false);
+		// dlg.setCanceledOnTouchOutside(false);
+		// DialogInterface.OnClickListener lstnr = new
+		// DialogInterface.OnClickListener() {
+		//
+		// @Override
+		// public void onClick(DialogInterface dialog, int which) {
+		// if (which == AlertDialog.BUTTON_POSITIVE) {
+		// MainActivity.super.onBackPressed();
+		// }
+		// dialog.dismiss();
+		// }
+		// };
+		// dlg.setButton(AlertDialog.BUTTON_NEGATIVE, "No", lstnr);
+		// dlg.setButton(AlertDialog.BUTTON_POSITIVE, "Yes", lstnr);
+		// dlg.show();
+		// super.onBackPressed();
 	}
 }

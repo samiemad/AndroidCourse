@@ -44,6 +44,10 @@
                     android:id="@+id/action_blue"
                     android:showAsAction="never"
                     android:title="BLUE"/>
+                <item 
+                    android:id="@+id/action_chooseBG"
+                    android:showAsAction="never"
+                    android:title="Choose a different color"></item>
             </group>
         </menu>
     </item>
