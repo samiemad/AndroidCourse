@@ -7,19 +7,17 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
@@ -220,14 +218,19 @@ public class MainActivity extends Activity {
 				item.setChecked(true);
 				item.setTitle("show exit");
 			}
-		} else if (id == R.id.action_chooseBG) {
+		} else if (id == R.id.action_chooseColor) {
 			showBGChooseDialog();
+		} else if (id == R.id.action_startLifeCycle) {
+			Intent i = new Intent(MainActivity.this, LifeCycleActivity.class);
+			i.putExtra("my message", "this is data from MAinActivity");
+			// startActivity(i);
+
+			startActivityForResult(i, 15);
+			// startActivity(new Intent(this, LifeCycleActivity.class));
 		}
 
 		return true;
 	}
-
-	int r, g, b;
 
 	private void showBGChooseDialog() {
 		final Dialog dlg = new ColorChooserDialog(this);
@@ -257,26 +260,17 @@ public class MainActivity extends Activity {
 		} else {
 			super.onBackPressed();
 		}
-		// AlertDialog dlg = new AlertDialog.Builder(this).create();
-		// dlg.setTitle("Exit");
-		// dlg.setMessage("Are you sure you want to exit?");
-		// dlg.setIcon(android.R.drawable.ic_dialog_info);
-		// dlg.setCancelable(false);
-		// dlg.setCanceledOnTouchOutside(false);
-		// DialogInterface.OnClickListener lstnr = new
-		// DialogInterface.OnClickListener() {
-		//
-		// @Override
-		// public void onClick(DialogInterface dialog, int which) {
-		// if (which == AlertDialog.BUTTON_POSITIVE) {
-		// MainActivity.super.onBackPressed();
-		// }
-		// dialog.dismiss();
-		// }
-		// };
-		// dlg.setButton(AlertDialog.BUTTON_NEGATIVE, "No", lstnr);
-		// dlg.setButton(AlertDialog.BUTTON_POSITIVE, "Yes", lstnr);
-		// dlg.show();
-		// super.onBackPressed();
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == 15) {
+			if (resultCode == RESULT_OK) {
+				String res = data.getStringExtra("my result");
+				Toast.makeText(this, res, Toast.LENGTH_LONG).show();
+			} else {
+				Toast.makeText(this, "result not ok!", Toast.LENGTH_LONG).show();
+			}
+		}
 	}
 }
