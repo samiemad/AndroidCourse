@@ -1,0 +1,40 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.technohome.androidtrainning.AutoBoomActivity" >
+
+    <ToggleButton
+        android:id="@+id/toggleButtonMusic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="Music" />
+
+    <Switch
+        android:id="@+id/switchAuto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="Auto Boom" />
+
+    <SeekBar
+        android:id="@+id/seekBarTimeDelay"
+        android:layout_width="match_parent"
+        android:max="3000"
+        android:progress="500"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/textViewAuto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="BOOM!" />
+
+</LinearLayout>

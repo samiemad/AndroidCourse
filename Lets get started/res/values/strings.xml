@@ -47,5 +47,6 @@ To show an alphabetically sorted index of keywords select the Index Frame (). No
 
     <string name="title_activity_animatoin">AnimatoinActivity</string>
     <string name="title_activity_animation2">Animation2Activity</string>
-
+    <string name="title_activity_auto_boom">AutoBoomActivity</string>
+    
 </resources>
