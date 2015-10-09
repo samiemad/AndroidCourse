@@ -8,8 +8,10 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,16 +35,19 @@ import android.widget.ToggleButton;
 public class MainActivity extends Activity {
 	Random rnd = new Random();
 
-	TextView tv;
+	static TextView tv;
 	private EditText et;
 	private SeekBar seekBar1;
 	private ArrayAdapter<MyText> adapter;
 	private ArrayList<MyText> arrayOfHistory = new ArrayList<MyText>();
 
+	private SharedPreferences pr;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		pr = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
 		tv = (TextView) findViewById(R.id.textView1);
 		et = (EditText) findViewById(R.id.editText1);
@@ -139,6 +144,21 @@ public class MainActivity extends Activity {
 				return true;
 			}
 		});
+
+		// Day8: extract the settings and apply them to the app:
+		// - say hello to the user with his/her name:
+		String name = pr.getString("username", null);
+		if (name != null) {
+			Toast.makeText(this, "Welcome " + name, Toast.LENGTH_LONG).show();
+		} else {
+			Toast.makeText(this, "Hello World", Toast.LENGTH_LONG).show();
+		}
+		// - Restore the background color chosen by the user:
+		String color = pr.getString("bgColor", null);
+		boolean customColor = pr.getBoolean("customColor", false);
+		if (color != null && customColor == true) {
+			tv.setBackgroundColor(Color.parseColor(color));
+		}
 	}
 
 	private void showDeleteDialog(final int position) {
@@ -198,7 +218,9 @@ public class MainActivity extends Activity {
 		if (id == R.id.action_close) {
 			finish();
 		} else if (id == R.id.action_settings) {
-			Toast.makeText(this, "Settings action butoon is pressed", Toast.LENGTH_SHORT).show();
+			// Toast.makeText(this, "Settings action butoon is pressed",
+			// Toast.LENGTH_SHORT).show();
+			Intent i = new Intent(this, SettingsActivity.class);
 		} else if (id == R.id.action_red) {
 			tv.setBackgroundColor(Color.RED);
 			item.setChecked(true);
@@ -230,6 +252,18 @@ public class MainActivity extends Activity {
 		}
 
 		return true;
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		String color = pr.getString("bgColor", null);
+		boolean b = pr.getBoolean("customColor", false);
+		if (b == true && color != null) {
+			tv.setBackgroundColor(Color.parseColor(color));
+		} else {
+			tv.setBackgroundColor(0);
+		}
 	}
 
 	private void showBGChooseDialog() {
@@ -267,7 +301,8 @@ public class MainActivity extends Activity {
 		if (requestCode == 15) {
 			if (resultCode == RESULT_OK) {
 				String res = data.getStringExtra("my result");
-				Toast.makeText(this, res, Toast.LENGTH_LONG).show();
+				int x = data.getIntExtra("result Int", 0);
+				Toast.makeText(this, res + "x = " + x, Toast.LENGTH_LONG).show();
 			} else {
 				Toast.makeText(this, "result not ok!", Toast.LENGTH_LONG).show();
 			}

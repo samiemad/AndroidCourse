@@ -5,5 +5,47 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="lifeCycle">Activity Life Cycle</string>
+    <string name="longText">Using the help system
+Browse topics in the Contents frame () on the left. Click on a topic to have it displayed. Use the Back and Forward buttons to navigate within the history of viewed topics. 
+
+Searching
+To quickly locate topics on a particular subject in the documentation, enter a query in the Search field. Use the Search frame () to display the Search view. You can narrow the scope of your search by selecting only the sections you are interested in. 
+
+Synchronizing
+Clicking the Show in Table of Contents button () will select that topic in the navigation tree. The Link with Contents button () keeps the navigation tree synchronized to the current topic. 
+
+Capabilities
+To show documentation about capabilities that are disabled in the application, select the Show All Topics button () . This affects the table of contents and search results. 
+
+Keyword Index
+To show an alphabetically sorted index of keywords select the Index Frame (). Not all products contain an index</string>
+
+    <string-array name="colorTitles">
+        <item>Red</item>
+        <item>Green</item>
+        <item>Blue</item>
+        <item>Cyan</item>
+        <item>Magneta</item>
+        <item>Orange</item>
+        <item>Black</item>
+        <item>White</item>
+        <item>Yellow</item>
+        <item>Grey</item>
+    </string-array>
+    <string-array name="colorValues">
+        <item>#ff0000</item>
+        <item>#00ff00</item>
+        <item>blue</item>
+        <item>cyan</item>
+        <item>magenta</item>
+        <item>#ffff00</item>
+        <item>black</item>
+        <item>white</item>
+        <item>yellow</item>
+        <item>grey</item>
+    </string-array>
+
+    <string name="title_activity_animatoin">AnimatoinActivity</string>
+    <string name="title_activity_animation2">Animation2Activity</string>
 
 </resources>
