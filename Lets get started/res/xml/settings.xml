@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="Weclome" />
+
+    <CheckBoxPreference
+        android:key="sound"
+        android:title="Sound" />
+
+    <EditTextPreference
+        android:dialogMessage="enter your name please"
+        android:dialogTitle="Your Name"
+        android:key="username"
+        android:title="Your Name" />
+
+    <PreferenceCategory android:title="Theme" />
+
+    <SwitchPreference
+        android:key="customColor"
+        android:summaryOff="default color will be used"
+        android:summaryOn="please choose a color below:"
+        android:switchTextOff="O"
+        android:switchTextOn="I"
+        android:title="Custom Color" />
+
+    <ListPreference
+        android:dependency="customColor"
+        android:entries="@array/colorTitles"
+        android:entryValues="@array/colorValues"
+        android:key="bgColor"
+        android:title="Backgroud Color" />
+
+</PreferenceScreen>
